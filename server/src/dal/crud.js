@@ -1,19 +1,19 @@
-import supabase from "../src/db/configSupabase";
+import supabase from "../db/configSupabase.js"
 
 const tableLaunchers = supabase.from("tableLaunchers")
 
-export async function returnAllLauncers() {
+export async function returnAllLauncersFromDB() {
     try {
         const { data, error } = await tableLaunchers
             .select()
         if (error) throw new Error(error)
-        return data[0]
+        return data
     } catch (error) {
         console.log(error.message)
     }
 };
 
-export async function returnLauncherById(numId) {
+export async function returnLauncherByIdFromDB(numId) {
     try {
         const { data, error } = await tableLaunchers
             .select()
@@ -35,7 +35,7 @@ export async function insertLauncherInDB(city, rocketType, latitude, longitude, 
     }
 };
 
-export async function deletLauncherfromDB(numId) {
+export async function deletLauncherByIdfromDB(numId) {
     try {
         await tableLaunchers
         .delete()
