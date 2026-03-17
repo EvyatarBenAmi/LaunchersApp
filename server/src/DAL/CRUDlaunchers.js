@@ -41,6 +41,6 @@ export async function deletLauncherByIdfromDB(numId) {
         .delete()
         .eq("id", numId)
     } catch (error) {
-        if (error) throw new Error(error)
+        console.log(error.message)
     }
 };

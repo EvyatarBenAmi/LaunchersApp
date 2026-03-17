@@ -14,13 +14,12 @@ export default function Launcers() {
     }
 
     useEffect(()=>{
-        setdata(returnAllLaunchers())
+        // setdata( returnAllLaunchers())
     })
 
 
   return (
     <div>
-        {/* <button onClick={returnAllLaunchers}>launchers</button> */}
         <p>{data}</p>
     </div>
   )

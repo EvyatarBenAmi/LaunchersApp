@@ -1,8 +1,10 @@
-import { deletLauncherByIdfromDB, insertLauncherInDB, returnAllLauncersFromDB, returnLauncherByIdFromDB } from "../dal/crud.js"
+import { deletLauncherByIdfromDB, insertLauncherInDB, returnAllLauncersFromDB, returnLauncherByIdFromDB } from "../DAL/CRUDlaunchers.js"
 
 
 export const returnAllLaunchrs = async (req, res) => {
     try {
+        const { user } = req.payload
+        if (user.user_type !== "Admin" || user.user_type !== "Intelligence" || user.user_type !== "AirForce") return res.status(401).send("Error: This user type is not authorized.")
         const resolt = await returnAllLauncersFromDB()
         res.send(resolt)
     } catch (error) {
@@ -13,6 +15,8 @@ export const returnAllLaunchrs = async (req, res) => {
 
 export const returnLauncherById = async (req, res) => {
     try {
+        const { user } = req.payload
+        if (user.user_type !== "Admin" || user.user_type !== "Intelligence" || user.user_type !== "AirForce") return res.status(401).send("Error: This user type is not authorized.")
         const { id } = req.body
         const resolt = await returnLauncherByIdFromDB(id)
         if (!resolt) res.send("id is not found!")
@@ -25,6 +29,8 @@ export const returnLauncherById = async (req, res) => {
 
 export const insertLauncher = async (req, res) => {
     try {
+        const { user } = req.payload
+        if (user.user_type !== "Admin" || user.user_type !== "Intelligence") return res.status(401).send("Error: This user type is not authorized.")
         const { city, rocketType, latitude, longitude, name } = req.body
         await insertLauncherInDB(city, rocketType, latitude, longitude, name)
         res.send("inserted")
@@ -36,6 +42,8 @@ export const insertLauncher = async (req, res) => {
 
 export const deletLauncherById = async (req, res) => {
     try {
+        const { user } = req.payload
+        if (user.user_type !== "Admin" || user.user_type !== "Intelligence") return res.status(401).send("Error: This user type is not authorized.")
         const { id } = req.params
         const resolt = await returnLauncherByIdFromDB(id)
         if (!resolt) return res.send("id is not found!")
